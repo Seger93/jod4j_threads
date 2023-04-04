@@ -10,8 +10,10 @@ public class ThreadState {
         );
         first.start();
         second.start();
-        if (!first.isAlive() && !second.isAlive()) {
-            System.out.println("Работа завершена");
+        if (first.isAlive() && second.isAlive()) {
+            System.out.println(first.getName());
+            System.out.println(second.getName());
         }
+        System.out.println("Работа завершена");
     }
 }
