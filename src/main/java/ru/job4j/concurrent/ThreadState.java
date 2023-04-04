@@ -10,7 +10,7 @@ public class ThreadState {
         );
         first.start();
         second.start();
-        if (first.isAlive() && second.isAlive()) {
+        if (first.isAlive() || second.isAlive()) {
             System.out.println(first.getName());
             System.out.println(second.getName());
         }
