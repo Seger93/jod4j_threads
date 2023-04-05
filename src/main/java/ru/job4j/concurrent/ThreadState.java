@@ -10,8 +10,10 @@ public class ThreadState {
         );
         first.start();
         second.start();
-        if (first.isAlive() || second.isAlive()) {
+        while (first.getState() != Thread.State.TERMINATED) {
             System.out.println(first.getName());
+        }
+        while (second.getState() != Thread.State.TERMINATED) {
             System.out.println(second.getName());
         }
         System.out.println("Работа завершена");
