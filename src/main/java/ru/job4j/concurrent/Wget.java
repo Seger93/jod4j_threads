@@ -9,9 +9,9 @@ public class Wget {
                             Thread.sleep(1000);
                             System.out.println("\rLoading : " + index + "%");
                         }
-                        } catch(InterruptedException e){
-                            e.printStackTrace();
-                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
         );
         thread.start();
