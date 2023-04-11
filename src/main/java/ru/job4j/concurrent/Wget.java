@@ -32,9 +32,9 @@ public class Wget implements Runnable {
                     long endTimeStamp = System.currentTimeMillis();
                     if ((endTimeStamp - startTimeStamp) < 1000) {
                         Thread.sleep(1000 - (endTimeStamp - startTimeStamp));
-                        startTimeStamp = System.currentTimeMillis();
-                        downloadData = 0;
                     }
+                    startTimeStamp = System.currentTimeMillis();
+                    downloadData = 0;
                 }
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
             }
