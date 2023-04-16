@@ -2,11 +2,9 @@ package ru.job4j.ref;
 
 import net.jcip.annotations.ThreadSafe;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @ThreadSafe
 public class UserCache {
