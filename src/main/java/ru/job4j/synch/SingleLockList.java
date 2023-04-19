@@ -34,6 +34,7 @@ public class SingleLockList<T> implements Iterable<T> {
     *Крайне важно, чтобы пользователь вручную синхронизировал возвращаемый список
     * при его обходе через Iterator, Spliterator или Stream:
      */
+
     private synchronized List<T> copy(List<T> origin) {
         return new LinkedList<>(Collections.synchronizedList(origin));
     }
