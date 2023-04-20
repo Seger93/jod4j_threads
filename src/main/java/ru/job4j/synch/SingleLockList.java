@@ -27,15 +27,8 @@ public class SingleLockList<T> implements Iterable<T> {
     public synchronized Iterator<T> iterator() {
         return copy(list).iterator();
     }
-    /**
-    *Возвращает синхронизированный (потокобезопасный) список, поддерживаемый указанным списком.
-    *Чтобы гарантировать последовательный доступ,
-    *очень важно, чтобы весь доступ к резервному списку выполнялся через возвращаемый список.
-    *Крайне важно, чтобы пользователь вручную синхронизировал возвращаемый список
-    * при его обходе через Iterator, Spliterator или Stream:
-     */
 
     private synchronized List<T> copy(List<T> origin) {
-        return new LinkedList<>(Collections.synchronizedList(origin));
+        return new ArrayList<>(origin);
     }
 }
