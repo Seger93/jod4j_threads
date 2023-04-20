@@ -12,7 +12,7 @@ public class CountBarrier {
     }
 
     public synchronized void count() {
-        count ++;
+        count++;
         monitor.notifyAll();
     }
 
