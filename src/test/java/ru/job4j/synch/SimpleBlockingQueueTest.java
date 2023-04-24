@@ -20,7 +20,11 @@ class SimpleBlockingQueueTest {
         );
         Thread consumer = new Thread(
                 () -> {
-                    list.add(queue.poll());
+                    try {
+                        list.add(queue.poll());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
         );
         producer.start();
