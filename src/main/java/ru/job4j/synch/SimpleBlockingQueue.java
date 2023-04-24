@@ -16,20 +16,20 @@ public class SimpleBlockingQueue<T> {
     public synchronized void offer(T value) {
         try {
             queue.add(value);
+            monitor.notify();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
-        monitor.notify();
     }
 
     public synchronized T poll() {
-        while (queue.peek() == null) {
+        while (queue.isEmpty()) {
             try {
                 monitor.wait();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-        return queue.peek();
+        return queue.poll();
     }
 }
