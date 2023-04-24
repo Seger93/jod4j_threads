@@ -22,13 +22,9 @@ public class SimpleBlockingQueue<T> {
         }
     }
 
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (queue.isEmpty()) {
-            try {
-                monitor.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            monitor.wait();
         }
         return queue.poll();
     }
