@@ -7,8 +7,8 @@ import static java.lang.Thread.sleep;
 
 public class ParallelSearch {
 
-    public static void main(String[] args)  {
-        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+    public static void main(String[] args) throws InterruptedException  {
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(3);
         final Thread consumer = new Thread(
                 () -> {
                     while (!Thread.currentThread().isInterrupted()) {
@@ -24,16 +24,21 @@ public class ParallelSearch {
         Thread prod = new Thread(
                 () -> {
                     for (int index = 0; index != 3; index++) {
-                        queue.offer(index);
+                        try {
+                            queue.offer(index);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         try {
                             sleep(500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-                    consumer.interrupt();
                 }
         );
         prod.start();
+        prod.join();
+        consumer.interrupt();
     }
 }
