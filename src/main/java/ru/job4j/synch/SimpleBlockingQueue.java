@@ -21,11 +21,7 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized void offer(T value) throws InterruptedException {
         while (queue.size() == size) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            wait();
         }
         queue.offer(value);
         notifyAll();
