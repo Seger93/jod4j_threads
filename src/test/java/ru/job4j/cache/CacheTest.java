@@ -22,7 +22,7 @@ class CacheTest {
     }
 
     @Test
-    public void whenExp() throws OptimisticException {
+    public void whenExp()  {
         Cache cache = new Cache();
         Base base = new Base(0, 1);
         Base base1 = new Base(1, 1);
@@ -30,11 +30,13 @@ class CacheTest {
         cache.add(base);
         cache.add(base1);
         cache.add(base2);
-        cache.update(new Base(0, 3));
+        assertThatThrownBy(() -> cache.update(new Base(0,3)))
+                .isInstanceOf(OptimisticException.class)
+                .message().isEqualTo("Неверная версия");
     }
 
     @Test
-    public void whenGetsAndDeleteException() {
+    public void whenGetIsNull() {
         Cache cache = new Cache();
         Base base = new Base(0, 1);
         Base base1 = new Base(1, 1);
@@ -43,8 +45,6 @@ class CacheTest {
         cache.add(base1);
         cache.add(base2);
         cache.delete(base1);
-        assertThatThrownBy(() -> cache.get(1))
-                .isInstanceOf(IllegalArgumentException.class)
-                .message().isEqualTo("Нет такого ключа");
+        Assertions.assertThat(cache.get(1)).isNull();
     }
 }

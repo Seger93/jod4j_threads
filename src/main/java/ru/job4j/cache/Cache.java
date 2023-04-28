@@ -12,8 +12,7 @@ public class Cache {
 
     public boolean update(Base model) {
         return memory.computeIfPresent(model.getId(), (k, v) -> {
-            Base baseGet = memory.get(v.getId());
-            if (baseGet.getVersion() != v.getVersion()) {
+            if (model.getVersion() != v.getVersion()) {
                 throw new OptimisticException("Неверная версия");
             }
             Base update = new Base(v.getId(), v.getVersion() + 1);
@@ -23,13 +22,10 @@ public class Cache {
     }
 
     public void delete(Base model) {
-       memory.remove(model.getId());
+        memory.remove(model.getId());
     }
 
     public Base get(int id) {
-        if (memory.containsKey(id)) {
-            return memory.get(id);
-        }
-        throw new IllegalArgumentException("Нет такого ключа");
+        return memory.get(id);
     }
 }
