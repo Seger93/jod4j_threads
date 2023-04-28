@@ -2,6 +2,7 @@ package ru.job4j.cache;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.*;
 
 class CacheTest {
@@ -22,7 +23,7 @@ class CacheTest {
     }
 
     @Test
-    public void whenExp()  {
+    public void whenExp() {
         Cache cache = new Cache();
         Base base = new Base(0, 1);
         Base base1 = new Base(1, 1);
@@ -30,7 +31,7 @@ class CacheTest {
         cache.add(base);
         cache.add(base1);
         cache.add(base2);
-        assertThatThrownBy(() -> cache.update(new Base(0,3)))
+        assertThatThrownBy(() -> cache.update(new Base(0, 3)))
                 .isInstanceOf(OptimisticException.class)
                 .message().isEqualTo("Неверная версия");
     }
