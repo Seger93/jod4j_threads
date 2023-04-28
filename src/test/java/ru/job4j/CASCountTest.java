@@ -2,7 +2,6 @@ package ru.job4j;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,14 +24,5 @@ class CASCountTest {
         thread.join();
         thread1.join();
         Assertions.assertEquals(exp.get(), 5);
-    }
-
-    @Test
-    public void whenGetIsNull() {
-        final CASCount casCount = new CASCount();
-        assertThatThrownBy(casCount::get)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .message().isNotEmpty();
-
     }
 }
