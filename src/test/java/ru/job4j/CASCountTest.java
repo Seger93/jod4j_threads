@@ -17,9 +17,7 @@ class CASCountTest {
         });
         thread.start();
         AtomicInteger exp = new AtomicInteger();
-        Thread thread1 = new Thread(() -> {
-            exp.set(casCount.get());
-        });
+        Thread thread1 = new Thread(() -> exp.set(casCount.get()));
         thread1.start();
         thread.join();
         thread1.join();
