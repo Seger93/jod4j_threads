@@ -1,44 +1,50 @@
 package ru.job4j.pool;
 
-import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
-public class ParallelAskindex extends RecursiveTask<Integer> {
+public class ParallelAskindex<T> extends RecursiveTask<Integer> {
 
-    private final List array;
+    private final T[] array;
+    private final int from;
+    private final int to;
+    private final T element;
 
-    private final Object element;
-
-    public ParallelAskindex(List array, Object element) {
+    public ParallelAskindex(T[] array, int from, int to, T element) {
         this.array = array;
+        this.from = from;
+        this.to = to;
         this.element = element;
     }
 
     @Override
     protected Integer compute() {
-        if (array.size() <= 10) {
-            for (Object o : array) {
-                if (element.equals(o)) {
-                    return array.indexOf(o);
-                }
-            }
+        if (from - to < 10) {
+            return searchIndex();
         }
-        int mid = array.size() / 2;
-        ParallelAskindex left = new ParallelAskindex(array.subList(0, mid), element);
-        ParallelAskindex right = new ParallelAskindex(array.subList(mid, array.size()), element);
+        int mid = (from + to) / 2;
+        ParallelAskindex<T> left = new ParallelAskindex(array, from, mid, element);
+        ParallelAskindex<T> right = new ParallelAskindex(array, mid, to, element);
         left.fork();
         right.fork();
-        Object leftI = left.join();
-        Object rightI = right.join();
-        if (AskingElement.ask(leftI) < mid) {
-            return AskingElement.ask(leftI);
-        }
-        return AskingElement.ask(rightI);
+        Integer leftI = left.join();
+        Integer rightI = right.join();
+        return Math.max(leftI, rightI);
     }
 
-    public static Integer sort(List array, Object el) {
+    private int searchIndex() {
+        int rsl = -1;
+        for (int i = from; i <= to; i++) {
+            if (element.equals(array[i])) {
+                rsl = i;
+                break;
+            }
+        }
+        return rsl;
+    }
+
+    public static <T> int searchEl(T[] array, T el) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        return forkJoinPool.invoke(new ParallelAskindex(array, el));
+        return forkJoinPool.invoke(new ParallelAskindex<T>(array, 0, array.length - 1, el));
     }
 }
