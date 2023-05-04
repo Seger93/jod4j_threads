@@ -6,9 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.*;
 
-
 class RolColSumTest {
-
     @Test
     public void whenCalcColumn() throws ExecutionException, InterruptedException {
         int[][] table = new int[][]{
