@@ -1,0 +1,3 @@
+NIO Demo
+Hello!
+We are reading this file NIO Demo
