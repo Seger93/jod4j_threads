@@ -16,6 +16,7 @@ public class MultiUser {
                     barrier.check();
                     System.out.println(Thread.currentThread().getName() + " started");
                     System.out.println("Commit1");
+                    System.out.println("Commit3");
                 },
                 "Slave"
         );
