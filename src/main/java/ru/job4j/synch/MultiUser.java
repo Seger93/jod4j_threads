@@ -6,6 +6,7 @@ public class MultiUser {
         Thread master = new Thread(
                 () -> {
                     System.out.println(Thread.currentThread().getName() + " started");
+                    System.out.println("Commit2");
                     barrier.on();
                 },
                 "Master"
